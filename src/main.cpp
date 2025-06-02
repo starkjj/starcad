@@ -47,6 +47,8 @@ int main(int argc, char *argv[]) {
 
     bool quit = false;
 
+    bool show_command_palette = false;
+
     SDL_FPoint position{};
     bool drawing = false;
     SDL_Point start{};
@@ -81,12 +83,28 @@ int main(int argc, char *argv[]) {
             if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
                 drawing = false;
             }
+
+            if (e.type == SDL_EVENT_KEY_DOWN) {
+                if (e.key.key == SDLK_SPACE) {
+                    show_command_palette = !show_command_palette;
+                }
+            }
         }
 
         // Start the ImGui frame
         ImGui_ImplSDLRenderer3_NewFrame();
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
+
+        ImGui::BeginMainMenuBar();
+        if (ImGui::BeginMenu("File")) {
+            ImGui::MenuItem("New");
+            ImGui::MenuItem("New");
+            if (ImGui::MenuItem("Exit")) quit = true;
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
 
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
@@ -109,10 +127,22 @@ int main(int argc, char *argv[]) {
             ImGui::End();
         }
 
+        static char buff[32] = "";
+        if (show_command_palette) {
+            ImGui::Begin("Palette");
+            ImGui::InputText(" ", buff, 32);
+            ImGui::End();
+        }
+
         // Rendering
         ImGui::Render();
 
         // Draw our default background
+        // rgb(59, 68, 83) Other menu blue
+        // rgb(46, 52, 64) Dark menu blue
+        // rgb(44, 50, 64) Bright grid
+        // rgb(38, 45, 55) Low grid
+
         SDL_SetRenderDrawColor(renderer, 33, 40, 48, 255);
         SDL_RenderClear(renderer);
 

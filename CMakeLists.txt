@@ -64,5 +64,7 @@ list(APPEND LIBS SDL3_image::SDL3_image)
 #list(APPEND LIBS glm::glm)
 
 # Executable
-add_executable(starcad src/main.cpp)
+file(GLOB SRC_FILES src/*.cpp)
+
+add_executable(starcad ${SRC_FILES})
 target_link_libraries(starcad PRIVATE ${LIBS})
