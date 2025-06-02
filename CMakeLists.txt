@@ -55,13 +55,13 @@ CPMAddPackage("gh:libsdl-org/SDL_image#bcc97c0")
 list(APPEND LIBS SDL3_image::SDL3_image)
 
 # GLM
-FetchContent_Declare(
-        glm
-        GIT_REPOSITORY	https://github.com/g-truc/glm.git
-        GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
-)
-FetchContent_MakeAvailable(glm)
-list(APPEND LIBS glm::glm)
+#FetchContent_Declare(
+#        glm
+#        GIT_REPOSITORY	https://github.com/g-truc/glm.git
+#        GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
+#)
+#FetchContent_MakeAvailable(glm)
+#list(APPEND LIBS glm::glm)
 
 # Executable
 add_executable(starcad src/main.cpp)
