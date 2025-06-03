@@ -6,7 +6,14 @@
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_sdlrenderer3.h"
 
+#include "widgets/command_palette.hpp"
 #include "Drafter.hpp"
+
+// Draw our default background
+// rgb(59, 68, 83) Other menu blue
+// rgb(46, 52, 64) Dark menu blue
+// rgb(44, 50, 64) Bright grid
+// rgb(38, 45, 55) Low grid
 
 int main(int argc, char *argv[]) {
 
@@ -38,6 +45,7 @@ int main(int argc, char *argv[]) {
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     ImGui::StyleColorsDark();
 
     // Setup Platform/Renderer backends
@@ -45,12 +53,20 @@ int main(int argc, char *argv[]) {
     ImGui_ImplSDLRenderer3_Init(renderer);
 
     bool quit = false;
-    bool show_command_palette = false;
+    // bool show_command_palette = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    // ImVec2 mouse_position = ImVec2(0, 0);
 
     Drafter drafter(renderer);
+    CommandPalette command_palette;
+
+    SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
     while (!quit) {
+        SDL_SetCursor(cursor);
         SDL_Event e;
+
+        // Input Updates
         while (SDL_PollEvent(&e)) {
             ImGui_ImplSDL3_ProcessEvent(&e);
 
@@ -59,12 +75,7 @@ int main(int argc, char *argv[]) {
             if (e.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && e.window.windowID == SDL_GetWindowID(window))
                 quit = true;
 
-            if (e.type == SDL_EVENT_KEY_DOWN) {
-                if (e.key.key == SDLK_SPACE) {
-                    show_command_palette = !show_command_palette;
-                }
-            }
-
+            command_palette.handle_event(e);
             drafter.handle_event(e);
         }
 
@@ -73,6 +84,7 @@ int main(int argc, char *argv[]) {
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
+        // ImGui MenuBar
         ImGui::BeginMainMenuBar();
         if (ImGui::BeginMenu("File")) {
             ImGui::MenuItem("New");
@@ -82,29 +94,17 @@ int main(int argc, char *argv[]) {
         }
         ImGui::EndMainMenuBar();
 
-        static char buff[32] = "";
-        if (show_command_palette) {
-            ImGui::Begin("Palette");
-            ImGui::InputText(" ", buff, 32);
-            ImGui::End();
-        }
+        // ImGui Widgets
+        command_palette.render();
 
-        // Rendering
+        // SDL Rendering
         ImGui::Render();
-
-        // Draw our default background
-        // rgb(59, 68, 83) Other menu blue
-        // rgb(46, 52, 64) Dark menu blue
-        // rgb(44, 50, 64) Bright grid
-        // rgb(38, 45, 55) Low grid
-
         SDL_SetRenderDrawColor(renderer, 33, 40, 48, 255);
         SDL_RenderClear(renderer);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        // SDL_RenderDebugText(renderer, position.x, position.y, mtext);
 
-        drafter.render();
+        // drafter.render();
 
 
         ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), renderer);
