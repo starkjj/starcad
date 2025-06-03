@@ -15,6 +15,7 @@ include(${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake)
 set(LIBS)
 
 
+
 ## Dependencies
 
 # ImGui
@@ -54,11 +55,20 @@ set(SDLIMAGE_AVIF OFF CACHE BOOL "" FORCE) # Requires Perl and Nasm for libaom (
 CPMAddPackage("gh:libsdl-org/SDL_image#bcc97c0")
 list(APPEND LIBS SDL3_image::SDL3_image)
 
-# Source Files
-file(GLOB SRC_FILES src/*.cpp)
+# GLM
+FetchContent_Declare(
+        glm
+        GIT_REPOSITORY	https://github.com/g-truc/glm.git
+        GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
+)
+FetchContent_MakeAvailable(glm)
 
-include_directories(src/)
+# Source Files
+file(GLOB SRC_FILES src/*.cpp, src/primitives/*.cpp)
+
+include_directories(src/, src/primitives)
 
 # Executable
 add_executable(starcad ${SRC_FILES})
 target_link_libraries(starcad PRIVATE ${LIBS})
+target_link_libraries(starcad PRIVATE glm::glm)

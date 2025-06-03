@@ -1,11 +1,10 @@
-#include <SDL3/SDL.h>
 #include <iostream>
-
-#include "basic_box.h"
-#include "example_console.h"
+#include <SDL3/SDL.h>
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_sdlrenderer3.h"
+
+// #include "Drafter.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -43,21 +42,10 @@ int main(int argc, char *argv[]) {
     ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
     ImGui_ImplSDLRenderer3_Init(renderer);
 
-    // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
     bool quit = false;
-
     bool show_command_palette = false;
 
-    SDL_FPoint position{};
-    bool drawing = false;
-    SDL_Point start{};
-    SDL_Point end{};
-
-    BasicBox box{};
+    // Drafter drafter;
 
     while (!quit) {
         SDL_Event e;
@@ -69,31 +57,13 @@ int main(int argc, char *argv[]) {
             if (e.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && e.window.windowID == SDL_GetWindowID(window))
                 quit = true;
 
-            if (e.type == SDL_EVENT_MOUSE_MOTION) {
-                position.x = e.motion.x;
-                position.y = e.motion.y;
-
-                if (drawing) {
-                    end.x = position.x;
-                    end.y = position.y;
-                }
-            }
-
-            // if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-            //     drawing = true;
-            //     start.x = end.x = e.button.x;
-            //     start.y = end.y = e.button.y;
-            // }
-            //
-            // if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
-            //     drawing = false;
-            // }
-
             if (e.type == SDL_EVENT_KEY_DOWN) {
                 if (e.key.key == SDLK_SPACE) {
                     show_command_palette = !show_command_palette;
                 }
             }
+
+            // drafter.handle_event(e);
         }
 
         // Start the ImGui frame
@@ -109,9 +79,6 @@ int main(int argc, char *argv[]) {
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
-
-        ShowExampleAppConsole();
-
 
         static char buff[32] = "";
         if (show_command_palette) {
@@ -138,14 +105,7 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         // SDL_RenderDebugText(renderer, position.x, position.y, mtext);
 
-        if (drawing) {
-            SDL_FRect rect;
-            rect.x = start.x;
-            rect.y = start.y;
-            rect.w = end.x - start.x;
-            rect.h = end.y - start.y;
-            SDL_RenderRect(renderer, &rect);
-        }
+        // drafter.render();
 
 
         ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), renderer);

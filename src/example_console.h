@@ -253,7 +253,7 @@ struct ExampleAppConsole
         return console->TextEditCallback(data);
     }
 
-    int     TextEditCallback(ImGuiInputTextCallbackData* data)
+    int TextEditCallback(ImGuiInputTextCallbackData* data)
     {
         //AddLog("cursor: %d, selection: %d-%d", data->CursorPos, data->SelectionStart, data->SelectionEnd);
         switch (data->EventFlag)
