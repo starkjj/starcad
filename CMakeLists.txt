@@ -64,7 +64,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(glm)
 
 # Source Files
-file(GLOB SRC_FILES src/*.cpp, src/primitives/*.cpp)
+file(GLOB SRC_FILES src/*.cpp)
 
 include_directories(src/, src/primitives)
 

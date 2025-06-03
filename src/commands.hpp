@@ -4,6 +4,7 @@
 
 class Commands {
 public:
+    virtual ~Commands() = default;
 
     virtual auto move() -> void = 0;
     virtual auto rotate() -> void = 0;
@@ -11,7 +12,7 @@ public:
     virtual auto erase() -> void = 0;
 
     // Create a new empty parent shape and make the shapes children?
-    auto group() -> void { };
+    auto group() -> void { }
 
     // Create enums for parameters
     // angle/h/v, length, amount

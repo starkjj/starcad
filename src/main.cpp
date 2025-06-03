@@ -1,10 +1,12 @@
-#include <iostream>
 #include <SDL3/SDL.h>
+
+#include <iostream>
+
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_sdlrenderer3.h"
 
-// #include "Drafter.hpp"
+#include "Drafter.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
     bool quit = false;
     bool show_command_palette = false;
 
-    // Drafter drafter;
+    Drafter drafter(renderer);
 
     while (!quit) {
         SDL_Event e;
@@ -63,7 +65,7 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-            // drafter.handle_event(e);
+            drafter.handle_event(e);
         }
 
         // Start the ImGui frame
@@ -99,13 +101,10 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 33, 40, 48, 255);
         SDL_RenderClear(renderer);
 
-        char mtext[64];
-        sprintf(mtext, "%f, %f", position.x, position.y);
-
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         // SDL_RenderDebugText(renderer, position.x, position.y, mtext);
 
-        // drafter.render();
+        drafter.render();
 
 
         ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), renderer);

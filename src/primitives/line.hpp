@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "primitive.hpp"
+#include "../commands.hpp"
 
 // Base class for all shapes (and maybe text)
 class Line : public Primitive, public Commands {
