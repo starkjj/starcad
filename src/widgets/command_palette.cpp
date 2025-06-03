@@ -26,6 +26,7 @@ auto CommandPalette::render() -> void {
     if (show_command_palette) {
         ImGui::SetNextWindowPos(ImVec2(mouse_position.x + 8, mouse_position.y - 42));
         ImGui::Begin("##", &show_command_palette, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
+        ImGui::SetKeyboardFocusHere(0);
         ImGui::InputText(" ", buff, 32);
         ImGui::End();
     }
