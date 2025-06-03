@@ -1,5 +1,8 @@
 #include <SDL3/SDL.h>
 #include <iostream>
+
+#include "basic_box.h"
+#include "example_console.h"
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_sdlrenderer3.h"
@@ -54,6 +57,8 @@ int main(int argc, char *argv[]) {
     SDL_Point start{};
     SDL_Point end{};
 
+    BasicBox box{};
+
     while (!quit) {
         SDL_Event e;
         while (SDL_PollEvent(&e)) {
@@ -74,15 +79,15 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-            if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-                drawing = true;
-                start.x = end.x = e.button.x;
-                start.y = end.y = e.button.y;
-            }
-
-            if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
-                drawing = false;
-            }
+            // if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+            //     drawing = true;
+            //     start.x = end.x = e.button.x;
+            //     start.y = end.y = e.button.y;
+            // }
+            //
+            // if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
+            //     drawing = false;
+            // }
 
             if (e.type == SDL_EVENT_KEY_DOWN) {
                 if (e.key.key == SDLK_SPACE) {
@@ -99,33 +104,14 @@ int main(int argc, char *argv[]) {
         ImGui::BeginMainMenuBar();
         if (ImGui::BeginMenu("File")) {
             ImGui::MenuItem("New");
-            ImGui::MenuItem("New");
+            ImGui::MenuItem("Open");
             if (ImGui::MenuItem("Exit")) quit = true;
             ImGui::EndMenu();
         }
-
         ImGui::EndMainMenuBar();
 
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
+        ShowExampleAppConsole();
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-            ImGui::End();
-        }
 
         static char buff[32] = "";
         if (show_command_palette) {
@@ -150,7 +136,7 @@ int main(int argc, char *argv[]) {
         sprintf(mtext, "%f, %f", position.x, position.y);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderDebugText(renderer, position.x, position.y, mtext);
+        // SDL_RenderDebugText(renderer, position.x, position.y, mtext);
 
         if (drawing) {
             SDL_FRect rect;

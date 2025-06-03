@@ -20,7 +20,6 @@ struct ExampleAppConsole
 
     ExampleAppConsole()
     {
-        IMGUI_DEMO_MARKER("Examples/Console");
         ClearLog();
         memset(InputBuf, 0, sizeof(InputBuf));
         HistoryPos = -1;
@@ -66,10 +65,10 @@ struct ExampleAppConsole
         Items.push_back(Strdup(buf));
     }
 
-    void    Draw(const char* title, bool* p_open)
+    void    Draw(const char* title)
     {
         ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
-        if (!ImGui::Begin(title, p_open))
+        if (!ImGui::Begin(title))
         {
             ImGui::End();
             return;
@@ -80,8 +79,6 @@ struct ExampleAppConsole
         // Here we create a context menu only available from the title bar.
         if (ImGui::BeginPopupContextItem())
         {
-            if (ImGui::MenuItem("Close Console"))
-                *p_open = false;
             ImGui::EndPopup();
         }
 
@@ -358,8 +355,8 @@ struct ExampleAppConsole
     }
 };
 
-static void ShowExampleAppConsole(bool* p_open)
+static void ShowExampleAppConsole()
 {
     static ExampleAppConsole console;
-    console.Draw("Example: Console", p_open);
+    console.Draw("Example: Console");
 }
