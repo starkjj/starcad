@@ -9,11 +9,11 @@
 #include "widgets/command_palette.hpp"
 #include "Drafter.hpp"
 
-// Draw our default background
+// Some default colors
 // rgb(59, 68, 83) Other menu blue
 // rgb(46, 52, 64) Dark menu blue
 // rgb(44, 50, 64) Bright grid
-// rgb(38, 45, 55) Low grid
+// rgb(38, 45, 55) Dim grid
 
 int main(int argc, char *argv[]) {
 
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    // I want resolution to 60% of window size
+    // TODO: Make window size automatically 60% of monitor resolution
     SDL_Window* window = SDL_CreateWindow("StarCad", 1280, 720, 0);
     if (window == nullptr) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -43,30 +43,29 @@ int main(int argc, char *argv[]) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Enable keyboard
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable gamepad
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;       // Enable docking
     ImGui::StyleColorsDark();
 
-    // Setup Platform/Renderer backends
+    // Setup Platform/Renderer backends for ImGui
     ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
     ImGui_ImplSDLRenderer3_Init(renderer);
 
+    // Application "alive" state
     bool quit = false;
-    // bool show_command_palette = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    // ImVec2 mouse_position = ImVec2(0, 0);
 
     Drafter drafter(renderer);
     CommandPalette command_palette;
 
     SDL_Cursor* cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
+    // Update loop
     while (!quit) {
         SDL_SetCursor(cursor);
         SDL_Event e;
 
-        // Input Updates
+        // Input updates
         while (SDL_PollEvent(&e)) {
             ImGui_ImplSDL3_ProcessEvent(&e);
 
@@ -94,18 +93,15 @@ int main(int argc, char *argv[]) {
         }
         ImGui::EndMainMenuBar();
 
-        // ImGui Widgets
+        // ImGui additional widgets go here!
         command_palette.render();
+        ImGui::Render();
 
         // SDL Rendering
-        ImGui::Render();
         SDL_SetRenderDrawColor(renderer, 33, 40, 48, 255);
         SDL_RenderClear(renderer);
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
         // drafter.render();
-
 
         ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), renderer);
         SDL_RenderPresent(renderer);
