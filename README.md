@@ -1,7 +1,5 @@
 # ✍️ StarCad - A basic 2D CAD drawing tool
 
----
-
 Just a basic 'automatic desk'-inspired 2D cad 
 drawing application. 
 
