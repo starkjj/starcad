@@ -30,10 +30,10 @@ auto Drafter::handle_event(SDL_Event e) -> void {
 
 auto Drafter::render() -> void {
     if (is_drawing || (start.x != end.x && start.y != end.y)) {
-        float x = std::min(start.x, end.x);
-        float y = std::min(start.y, end.y);
-        float w = std::abs(end.x - start.x);
-        float h = std::abs(end.y - start.y);
+        float x = glm::min(start.x, end.x);
+        float y = glm::min(start.y, end.y);
+        float w = glm::abs(end.x - start.x);
+        float h = glm::abs(end.y - start.y);
         SDL_FRect rect = {x, y, w, h};
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderRect(renderer, &rect);

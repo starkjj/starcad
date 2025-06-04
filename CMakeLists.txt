@@ -3,7 +3,14 @@ project(starcad)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 17)
 
-# CPM
+if(APPLE)
+    enable_language(OBJC)
+    enable_language(OBJCXX)
+    set_source_files_properties(${SOURCE_FILES} PROPERTIES
+            COMPILE_FLAGS "-x objective-c++")
+endif(APPLE)
+
+    # CPM
 file(
         DOWNLOAD
         https://github.com/cpm-cmake/CPM.cmake/releases/download/v0.38.3/CPM.cmake
