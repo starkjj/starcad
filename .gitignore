@@ -1,0 +1,4 @@
+/subprojects/*
+/.idea/*
+
+!/subprojects/*.wrap
