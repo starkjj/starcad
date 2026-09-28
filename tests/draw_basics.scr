@@ -1,0 +1,92 @@
+; Draws one of each basic entity, hatches and dimensions them, then drives a dimension.
+; Run: myfirstmeson --script tests/draw_basics.scr
+LINE
+10,10
+100,10
+100,60
+C
+10,10
+REC
+120,10
+200,60
+CIRCLE
+250,35
+25
+POLYGON
+6
+330,35
+I
+25
+ELLIPSE
+C
+400,35
+440,35
+15
+ARC
+10,100
+50,140
+90,100
+PLINE
+110,100
+150,140
+190,100
+230,140
+
+TEXT
+10,200
+6
+0
+Hello MiniCAD
+Second line of text
+
+MTEXT
+250,230
+400,170
+Multiline text wraps inside its box width.\PSecond paragraph.
+; Hatch inside the rectangle and inside the line triangle
+HATCH
+!click 160,35
+!click 70,20
+
+; Hatch the circle with a solid fill by selecting it
+HATCH
+Pattern
+Solid
+Select objects
+!click 275,35
+
+
+; Associative dimensions (clicked so object snaps capture references)
+DIMLINEAR
+!click 120,10
+!click 200,10
+!click 160,-5
+DIMLINEAR
+!click 200,10
+!click 200,60
+!click 215,35
+DIMALIGNED
+!click 100,10
+!click 100,60
+!click 110,35
+DIMRADIUS
+!click 275,35
+!click 290,70
+DIMDIAMETER
+!click 50,140
+!click 70,160
+ZOOM
+E
+!move 330,120
+!wait 2
+!screenshot tests/out_basics.bmp
+!wait 2
+; Drive the rectangle width 80 -> 120 (stretch) and the circle radius 25 -> 15
+!dimvalue 160,-5 120
+!dimvalue 290,70 15
+ZOOM
+E
+!wait 2
+!screenshot tests/out_driven.bmp
+!wait 2
+!exit

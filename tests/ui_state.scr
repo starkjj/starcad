@@ -1,0 +1,25 @@
+; Interactive UI state: selection grips, command preview with dynamic input, snap marker, dimension editor
+; Run: myfirstmeson --script tests/ui_state.scr
+REC
+0,0
+100,60
+CIRCLE
+160,30
+25
+DIMLINEAR
+!click 0,0
+!click 100,0
+!click 50,-12
+ZOOM
+E
+; select the circle so its grips show
+!click 185,30
+!dblclick 50,-12
+LINE
+0,60
+100,60
+!move 150,55
+!wait 3
+!screenshot tests/out_ui.bmp
+!wait 2
+!exit

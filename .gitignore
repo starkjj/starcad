@@ -2,3 +2,5 @@
 /.idea/*
 
 !/subprojects/*.wrap
+/buildWeb/
+/tests/out_*

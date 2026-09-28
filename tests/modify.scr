@@ -1,0 +1,116 @@
+; Modify commands: TRIM, EXTEND, JOIN, MOVE, COPY, ROTATE, MIRROR, SCALE, GROUP, EXPLODE, grips, UNDO
+; Run: myfirstmeson --script tests/modify.scr
+; --- trim: a cross, trim the right arm ---
+LINE
+0,50
+80,50
+
+LINE
+40,10
+40,90
+
+TRIM
+!click 70,50
+
+; --- extend: short line extended to the nearest boundary ---
+LINE
+100,10
+100,90
+
+LINE
+120,10
+120,90
+
+LINE
+130,50
+170,50
+
+EXTEND
+!click 132,50
+
+; --- trim a circle between two lines (the top part is removed) ---
+CIRCLE
+230,50
+30
+LINE
+200,40
+260,40
+
+LINE
+200,60
+260,60
+
+TRIM
+!click 230,79
+
+; --- join: two touching lines + an arc into one polyline ---
+LINE
+10,130
+50,130
+70,160
+
+ARC
+70,160
+90,175
+110,160
+JOIN
+!window 0,120 120,190
+
+; --- copy / rotate / mirror / scale a rectangle ---
+REC
+150,130
+180,150
+COPY
+!click 150,140
+
+150,130
+200,130
+
+ROTATE
+!click 230,140
+
+230,130
+30
+MIRROR
+!click 150,140
+
+150,160
+180,160
+N
+SCALE
+!click 150,140
+
+150,130
+0.5
+; --- group two circles and move the group by picking one member ---
+CIRCLE
+300,140
+10
+CIRCLE
+330,140
+10
+GROUP
+!click 310,140
+!click 340,140
+
+MOVE
+!click 310,140
+
+300,140
+300,110
+; --- explode the joined polyline, then undo it ---
+EXPLODE
+!click 50,130
+
+U
+; --- grip edit: select the mirrored rectangle and stretch a corner ---
+!click 150,180
+!click 180,190
+!click 195,200
+ZOOM
+E
+!move 400,100
+!wait 2
+!screenshot tests/out_modify.bmp
+!wait 2
+!exit

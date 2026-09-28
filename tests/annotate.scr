@@ -1,0 +1,85 @@
+; Hatch islands, associative dimensions following MOVE, scale-mode driving, rotated text, snaps, undo
+; Run: myfirstmeson --script tests/annotate.scr
+; --- hatch with an island: rectangle with a circle inside, pick between them ---
+REC
+0,0
+100,60
+CIRCLE
+50,30
+15
+HATCH
+Pattern
+ANSI37
+sCale
+2
+!click 10,10
+
+; --- region made of separate LINEs (not a closed polyline) ---
+LINE
+130,0
+200,0
+200,60
+130,60
+C
+HATCH
+Pattern
+Solid
+!click 160,30
+
+; --- associative dimension on a line; move the line and the dim follows ---
+LINE
+0,100
+80,100
+
+DIMLINEAR
+!click 0,100
+!click 80,100
+!click 40,90
+MOVE
+!click 40,100
+
+0,0
+0,30
+; --- scale-mode driving: dimension a triangle side and scale it 50 -> 100 ---
+PLINE
+130,100
+180,100
+155,140
+C
+DIMALIGNED
+!click 130,100
+!click 180,100
+!click 155,92
+!dimvalue 155,92 100 scale
+; --- rotated single-line text, polygon by edge, 3P circle ---
+TEXT
+250,0
+5
+30
+Rotated 30 degrees
+
+POLYGON
+5
+E
+250,80
+280,80
+CIRCLE
+3P
+320,100
+360,100
+340,130
+; --- line drawn from an intersection snap (click near crossing of rect edge and line) ---
+LINE
+!click 101,60
+!click 250,60
+
+; --- undo the last line, then redo it ---
+U
+REDO
+ZOOM
+E
+!move 330,-20
+!wait 2
+!screenshot tests/out_annotate.bmp
+!wait 2
+!exit
