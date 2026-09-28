@@ -65,7 +65,7 @@ Task<std::vector<uint32_t>> Cad::select_objects(std::string prompt) {
 }
 
 Cad::Cad() {
-    log.push_back("MiniCAD - type a command (e.g. LINE or L) and press Enter or Space.");
+    log.push_back("StarCAD - type a command (e.g. LINE or L) and press Enter or Space.");
 }
 
 bool Cad::is_selected(uint32_t id) const {

@@ -1,5 +1,5 @@
 ; Draws one of each basic entity, hatches and dimensions them, then drives a dimension.
-; Run: myfirstmeson --script tests/draw_basics.scr
+; Run: starcad --script tests/draw_basics.scr
 LINE
 10,10
 100,10
@@ -36,7 +36,7 @@ TEXT
 10,200
 6
 0
-Hello MiniCAD
+Hello StarCAD
 Second line of text
 
 MTEXT

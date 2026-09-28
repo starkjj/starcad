@@ -221,13 +221,13 @@ void Cad::draw_ribbon(float height) {
     ImGui::SetCursorScreenPos(p0);
     ImGui::InvisibleButton("##app", ImVec2(44, tab_h));
     dl->AddRectFilled(ImVec2(p0.x + 6, p0.y + 3), ImVec2(p0.x + 38, p0.y + tab_h - 3), IM_COL32(200, 40, 50, 255), 2);
-    dl->AddText(ImGui::GetFont(), 15.0f, ImVec2(p0.x + 12, p0.y + 5), IM_COL32(255, 255, 255, 255), "MC");
+    dl->AddText(ImGui::GetFont(), 15.0f, ImVec2(p0.x + 12, p0.y + 5), IM_COL32(255, 255, 255, 255), "SC");
     if (ImGui::IsItemClicked()) ImGui::OpenPopup("##appmenu");
     if (ImGui::BeginPopup("##appmenu")) {
         if (ImGui::MenuItem("New drawing")) { force_checkpoint(); cancel(true); doc.ents.clear(); doc.touch(); sel.clear(); }
         if (ImGui::MenuItem("Zoom extents")) zoom_extents();
         ImGui::Separator();
-        ImGui::TextDisabled("MiniCAD - a 2D drafting demo");
+        ImGui::TextDisabled("StarCAD - a 2D drafting demo");
         ImGui::EndPopup();
     }
 

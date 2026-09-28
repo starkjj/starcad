@@ -1,4 +1,4 @@
-project('myfirstmeson', 'cpp',
+project('starcad', 'cpp',
         version : '1.0.0',
         default_options : ['warning_level=3', 'cpp_std=c++20', 'default_library=static']
 )
@@ -61,8 +61,8 @@ sources = [
         'cad/ui.cpp',
 ]
 
-myfirstmeson = executable(
-        'myfirstmeson',
+starcad = executable(
+        'starcad',
         sources,
         install : true,
         dependencies : deps,
@@ -71,5 +71,5 @@ myfirstmeson = executable(
 )
 
 if not is_web
-        test('test', myfirstmeson)
+        test('test', starcad)
 endif

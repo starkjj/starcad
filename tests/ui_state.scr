@@ -1,5 +1,5 @@
 ; Interactive UI state: selection grips, command preview with dynamic input, snap marker, dimension editor
-; Run: myfirstmeson --script tests/ui_state.scr
+; Run: starcad --script tests/ui_state.scr
 REC
 0,0
 100,60

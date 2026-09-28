@@ -1,5 +1,5 @@
 ; Modify commands: TRIM, EXTEND, JOIN, MOVE, COPY, ROTATE, MIRROR, SCALE, GROUP, EXPLODE, grips, UNDO
-; Run: myfirstmeson --script tests/modify.scr
+; Run: starcad --script tests/modify.scr
 ; --- trim: a cross, trim the right arm ---
 LINE
 0,50

@@ -1,5 +1,5 @@
 ; Hatch islands, associative dimensions following MOVE, scale-mode driving, rotated text, snaps, undo
-; Run: myfirstmeson --script tests/annotate.scr
+; Run: starcad --script tests/annotate.scr
 ; --- hatch with an island: rectangle with a circle inside, pick between them ---
 REC
 0,0

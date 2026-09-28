@@ -9,10 +9,10 @@
 int main(int argc, char** argv) {
     static Application app{};
 
-    if (!app.init(1600, 900, "MiniCAD"))
+    if (!app.init(1600, 900, "StarCAD"))
         return 1;
 
-    // myfirstmeson --script file.scr : runs a script at startup
+    // starcad --script file.scr : runs a script at startup
     for (int i = 1; i + 1 < argc; i++)
         if (std::strcmp(argv[i], "--script") == 0) {
             if (!app.load_script(argv[i + 1]))
