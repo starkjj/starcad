@@ -1,0 +1,60 @@
+# Builds the WebAssembly version with Emscripten and publishes it to GitHub Pages.
+name: Deploy web build
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let an in-progress deployment finish, but skip queued ones superseded by a newer push.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: latest
+          actions-cache-folder: emsdk-cache
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Meson and Ninja
+        run: pip install meson ninja
+
+      - name: Build
+        run: |
+          meson setup buildWeb --cross-file web/emscripten.ini
+          meson compile -C buildWeb
+
+      - name: Stage site
+        run: |
+          mkdir -p site
+          cp buildWeb/starcad.html site/index.html
+          cp buildWeb/starcad.js buildWeb/starcad.wasm site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
