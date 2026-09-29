@@ -2,6 +2,8 @@
 
 A simple 2D drafting app built with Dear ImGui. Runs on desktop and in the browser.
 
+![Main application screen](docs/screenshot.png)
+
 ## Build (desktop)
 
 ```
@@ -91,6 +93,7 @@ Type commands (e.g. `L`, `C`, `REC`, `TR`, `DLI`) and press Enter or Space. Esc 
 - [ ] Trimming and extending ellipses
 - [ ] Angular dimensions
 - [ ] Polar tracking and object snap tracking
+- [ ] Mid-point and similar snapping
 - [ ] Copy / paste (Ctrl+C / Ctrl+V)
 - [ ] Linetypes and lineweights
 - [ ] Paper space / layouts and printing
